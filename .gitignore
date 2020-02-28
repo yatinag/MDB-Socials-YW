@@ -51,6 +51,9 @@ captures/
 # Android Patch
 gen-external-apklibs
 
+#Will adding in build.gradle
+build.gradle
+
 #Android Google Services Configs
 google-services.json
 
