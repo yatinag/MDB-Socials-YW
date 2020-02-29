@@ -5,12 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+
+import java.io.File;
 
 public class NewEventActivity extends AppCompatActivity {
 
@@ -18,6 +22,7 @@ public class NewEventActivity extends AppCompatActivity {
     Button uploadBtn;
     EditText userCaption;
     String picturePath;
+    ImageView imgImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,7 @@ public class NewEventActivity extends AppCompatActivity {
         submitBtn = findViewById(R.id.submitBtn);
         uploadBtn = findViewById(R.id.uploadBtn);
         userCaption = findViewById(R.id.userCaption);
+        imgImage = findViewById(R.id.imgImage);
 
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +63,7 @@ public class NewEventActivity extends AppCompatActivity {
 
         if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
             Cursor cursor = getContentResolver().query(selectedImage,
                     filePathColumn, null, null, null);
@@ -65,8 +71,8 @@ public class NewEventActivity extends AppCompatActivity {
 
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             picturePath = cursor.getString(columnIndex);
+            imgImage.setImageBitmap(BitmapFactory.decodeFile(new File(picturePath).getAbsolutePath()));
             cursor.close();
-
         }
     }
 
