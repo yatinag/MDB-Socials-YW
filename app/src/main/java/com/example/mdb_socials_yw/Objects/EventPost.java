@@ -5,7 +5,32 @@ public class EventPost {
     private String description;
     private String email;
     private String img;
-    int attendance;
+    private int attendance;
+    private String uID;
+
+    public EventPost() {
+    }
+
+    @Override
+    public String toString() {
+        return "EventPost{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", email='" + email + '\'' +
+                ", img='" + img + '\'' +
+                ", attendance=" + attendance +
+                ", uID='" + uID + '\'' +
+                '}';
+    }
+
+    public EventPost(String title, String description, String email, String img, int attendance, String uID) {
+        this.title = title;
+        this.description = description;
+        this.email = email;
+        this.img = img;
+        this.attendance = attendance;
+        this.uID = uID;
+    }
 
     public String getTitle() {
         return title;
@@ -47,11 +72,4 @@ public class EventPost {
         this.attendance = attendance;
     }
 
-    public EventPost(String title, String description, String email, String img, int attendance) {
-        this.title = title;
-        this.description = description;
-        this.email = email;
-        this.img = img;
-        this.attendance = attendance;
-    }
 }
