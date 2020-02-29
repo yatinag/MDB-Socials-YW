@@ -103,9 +103,13 @@ public class NewEventActivity extends AppCompatActivity {
         System.out.println("sending data to database");
         String id = mDatabase.push().getKey();
         EventPost post = new EventPost(title, description, email, img, 0, id);
+<<<<<<< HEAD
         System.out.println(post);
 
         mDatabase.child(id).setValue(post);
+=======
+        mDatabase.child("posts").child(id).setValue(post);
+>>>>>>> 86bc8699cec87a30cc7167e093d6ac3bd62d63b5
     }
 
 
