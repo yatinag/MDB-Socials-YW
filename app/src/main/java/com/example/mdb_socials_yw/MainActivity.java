@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < 3; i++) {
             EventPost temp = new EventPost("Sample Event - " + i,
-                    "Event will be very fun", "boom@boom.com", "src.png", i);
+                    "Event will be very fun", "boom@boom.com", "src.png", i,"123");
             listPosts.add(temp);
         }
 
