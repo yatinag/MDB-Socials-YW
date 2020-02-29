@@ -14,5 +14,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         String post_title = getIntent().getStringExtra("post_title");
 
 
+
     }
 }
