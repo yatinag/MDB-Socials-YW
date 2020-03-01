@@ -1,11 +1,13 @@
 package com.example.mdb_socials_yw;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -21,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.mdb_socials_yw.Objects.EventPost;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +32,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class NewEventActivity extends AppCompatActivity {
@@ -36,6 +44,7 @@ public class NewEventActivity extends AppCompatActivity {
     final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1023;
     FirebaseAuth firebaseAuth;
     private DatabaseReference mDatabase;
+    private StorageReference mStorage;
     Button submitBtn;
     Button uploadBtn;
     EditText userCaption;
@@ -60,6 +69,7 @@ public class NewEventActivity extends AppCompatActivity {
         userCaption = findViewById(R.id.userCaption);
         userTitle = findViewById(R.id.userTitle);
         imgImage = findViewById(R.id.imgImage);
+        mStorage = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         uploadBtn.setOnClickListener(new View.OnClickListener() {
@@ -90,22 +100,41 @@ public class NewEventActivity extends AppCompatActivity {
                     email = user.getEmail();
                     uID = user.getUid();
                 }
+                Uri file = Uri.fromFile(new File(picturePath));
+                String picID = writeNewEventPost(title, description, img, uID, email);
+                StorageReference picsRef = mStorage.child(String.format("pictures/%s.jpg",picID));
+                picsRef.putFile(file)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                // Get a URL to the uploaded content
+                                Uri downloadUrl = taskSnapshot.getUploadSessionUri();
+                                System.out.println("successfully uploaded image");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Toast toast = Toast.makeText( NewEventActivity.this, "[server error] failure to upload image", Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
+                        });
+                System.out.println("Uploaded image");
 
-                System.out.println("adding EVENT");
-                writeNewEventPost(title, description, img, uID, email);
                 //addEvent(description);
                 startActivity(getBack);
             }
         });
     }
 
-    private void writeNewEventPost(String title, String description, String img, String userId, String email) {
+    private String writeNewEventPost(String title, String description, String img, String userId, String email) {
         System.out.println("sending data to database");
         String id = mDatabase.push().getKey();
         EventPost post = new EventPost(title, description, email, img, 0, id);
         System.out.println(post);
 
         mDatabase.child("posts").child(id).setValue(post);
+        return id;
     }
 
 
@@ -176,5 +205,4 @@ public class NewEventActivity extends AppCompatActivity {
             // permissions this app might request.
         }
     }
-
 }
