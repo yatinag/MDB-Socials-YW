@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,8 +28,10 @@ public class EventDetailsActivity extends AppCompatActivity {
     Button btnNewEvent;
     DatabaseReference databaseReference;
     EventPost details;
-    TextView postTitle, postDesc, postEmail, likeCount;
+    TextView postTitle, postDesc, postEmail, likeCount, dateVal;
     ImageView postImg;
+    ImageButton likeBtn;
+    boolean isLiked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,18 +45,29 @@ public class EventDetailsActivity extends AppCompatActivity {
         likeCount = findViewById(R.id.likeText);
         postEmail = findViewById(R.id.eventPersonEmail);
         postImg = findViewById(R.id.eventImg);
+        dateVal = findViewById(R.id.dateDisplay);
+        likeBtn = findViewById(R.id.likeBtn);
 
-        String uiD = getIntent().getStringExtra("post_uid");
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        System.out.println(isLiked);
+        final String uiD = getIntent().getStringExtra("post_uid");
         String title = getIntent().getStringExtra("post_title");
         String desc =  getIntent().getStringExtra("post_desc");
         String img = getIntent().getStringExtra("post_img");
         String email = getIntent().getStringExtra("post_email");
-        String attendance = getIntent().getStringExtra("post_att");
+        int attendance = getIntent().getIntExtra("post_att", 0);
+        String date = getIntent().getStringExtra("post_date");
+        long dateLong = getIntent().getLongExtra("post_date_long", 0);
+
+        details = new EventPost(title, desc, dateLong, email, img, attendance, uiD);
 
         postTitle.setText(title);
         postDesc.setText(desc);
-        likeCount.setText(attendance);
+        likeCount.setText(attendance + " Interested");
         postEmail.setText(email);
+        dateVal.setText(date);
+        dateVal.setPaintFlags(dateVal.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         signoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,11 +106,21 @@ public class EventDetailsActivity extends AppCompatActivity {
 //            }
 //        });
 
-        postImg.setOnClickListener(new View.OnClickListener() {
+        likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(details);
-                details.setAttendance(details.getAttendance() + 1);
+                System.out.println(isLiked);
+                if (!isLiked) {
+                    isLiked = true;
+                    details.setAttendance(details.getAttendance() + 1);
+                    likeBtn.setImageResource(R.drawable.rsvp_icon_color);
+                } else {
+                    isLiked = false;
+                    details.setAttendance(details.getAttendance() - 1);
+                    likeBtn.setImageResource(R.drawable.rsvp_icon);
+                }
+                updateAttendancePost(details);
+                likeCount.setText(details.getAttendance() + " Interested");
             }
         });
 
@@ -112,4 +137,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), NewEventActivity.class));
     }
 
+    private void updateAttendancePost(EventPost new_post) {
+        databaseReference.child("posts").child(new_post.getuID()).child("attendance").setValue(new_post.getAttendance());
+    }
 }

@@ -1,5 +1,8 @@
 package com.example.mdb_socials_yw.Objects;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class EventPost {
     private String title = "no title";
     private String description = "no description";
@@ -77,6 +80,13 @@ public class EventPost {
 
     public long getDate() {
         return date;
+    }
+
+    public String getDateString() {
+        Date stringDate = new Date(date);
+        SimpleDateFormat df2 = new SimpleDateFormat("dd MMM yyyy");
+        String dateText = df2.format(date);
+        return dateText;
     }
 
     public void setDate(long date) {

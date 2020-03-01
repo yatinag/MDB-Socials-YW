@@ -1,7 +1,9 @@
 package com.example.mdb_socials_yw;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,12 +50,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         String img = postsList.get(i).getImg();
         String desc = postsList.get(i).getDescription();
         String email = postsList.get(i).getEmail();
+        String date = postsList.get(i).getDateString();
         int likeCount = postsList.get(i).getAttendance();
 
         viewHolder.postTitle.setText(title);
         viewHolder.postDesc.setText(desc);
         viewHolder.postEmail.setText(email);
         viewHolder.likeCount.setText(likeCount + " Interested");
+        viewHolder.dateVal.setText(date);
 
 
         // Reference to an image file in Cloud Storage
@@ -76,7 +80,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView postTitle, postDesc, postEmail, likeCount;
+        TextView postTitle, postDesc, postEmail, likeCount, dateVal;
         ImageView postImg;
 
         public ViewHolder(@NonNull View itemView) {
@@ -91,14 +95,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                     intent.putExtra("post_img", postsList.get(getAdapterPosition()).getImg());
                     intent.putExtra("post_att", postsList.get(getAdapterPosition()).getAttendance());
                     intent.putExtra("post_uid", postsList.get(getAdapterPosition()).getuID());
+                    intent.putExtra("post_date", postsList.get(getAdapterPosition()).getDateString());
+                    intent.putExtra("post_date_long", postsList.get(getAdapterPosition()).getDate());
                     v.getContext().startActivity(intent);
                 }
             });
+            dateVal = itemView.findViewById(R.id.dateDisplay);
             postTitle = itemView.findViewById(R.id.eventTitle);
             postDesc = itemView.findViewById(R.id.eventDesc);
             likeCount = itemView.findViewById(R.id.likeText);
             postEmail = itemView.findViewById(R.id.eventPersonEmail);
             postImg = itemView.findViewById(R.id.eventImg);
+            dateVal.setPaintFlags(dateVal.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         }
     }
 }

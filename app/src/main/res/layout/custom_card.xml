@@ -29,24 +29,24 @@
                 android:text="Sample Email"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/eventImg"
+                app:layout_constraintBottom_toTopOf="@+id/dateDisplay"
                 app:layout_constraintEnd_toStartOf="@+id/eventImg"
-                app:layout_constraintHorizontal_bias="0.62"
+                app:layout_constraintHorizontal_bias="0.49"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.13999999" />
 
-<!--            <ImageButton-->
-<!--                android:id="@+id/likeBtn"-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="20dp"-->
-<!--                android:src="@drawable/like_img"-->
-<!--                app:layout_constraintBottom_toTopOf="@+id/eventImg"-->
-<!--                app:layout_constraintEnd_toStartOf="@+id/likeText"-->
-<!--                app:layout_constraintHorizontal_bias="0.96"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:layout_constraintVertical_bias="0.13" />-->
+            <!--            <ImageButton-->
+            <!--                android:id="@+id/likeBtn"-->
+            <!--                android:layout_width="20dp"-->
+            <!--                android:layout_height="20dp"-->
+            <!--                android:src="@drawable/like_img"-->
+            <!--                app:layout_constraintBottom_toTopOf="@+id/eventImg"-->
+            <!--                app:layout_constraintEnd_toStartOf="@+id/likeText"-->
+            <!--                app:layout_constraintHorizontal_bias="0.96"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"-->
+            <!--                app:layout_constraintVertical_bias="0.13" />-->
 
             <TextView
                 android:id="@+id/likeText"
@@ -56,9 +56,8 @@
                 android:text="# Interested"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/eventImg"
+                app:layout_constraintBottom_toTopOf="@+id/dateDisplay"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.36"
                 app:layout_constraintStart_toEndOf="@+id/eventImg"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.15" />
@@ -67,12 +66,12 @@
                 android:id="@+id/eventImg"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.00999999"
+                app:layout_constraintVertical_bias="0.19999999"
                 app:srcCompat="@drawable/ic_launcher_background" />
 
             <TextView
@@ -106,6 +105,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/eventTitle"
                 app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/dateDisplay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sample Date"
+                app:layout_constraintBottom_toTopOf="@+id/eventImg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.87" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
