@@ -1,11 +1,11 @@
 package com.example.mdb_socials_yw.Objects;
 
 public class EventPost {
-    private String title;
-    private String description;
+    private String title = "no title";
+    private String description = "no description";
     private String email;
     private String img;
-    private int attendance;
+    private int attendance = 0;
     private String uID;
 
     public EventPost() {

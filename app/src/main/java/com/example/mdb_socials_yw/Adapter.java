@@ -17,15 +17,19 @@ import java.util.ArrayList;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
     private ArrayList<EventPost> postsList;
+    private Context mContext;
     RequestOptions option;
 
     Adapter(Context context, ArrayList<EventPost> pokeNames){
         this.layoutInflater = LayoutInflater.from(context);
+        mContext = context;
         this.postsList = pokeNames;
         option = new RequestOptions().centerCrop().placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_background);
     }
@@ -50,6 +54,19 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         viewHolder.postDesc.setText(desc);
         viewHolder.postEmail.setText(email);
         viewHolder.likeCount.setText(likeCount + " Interested");
+
+
+        // Reference to an image file in Cloud Storage
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("images/"+postsList.get(i).getuID());
+
+        // ImageView in your Activity
+
+        // Download directly from StorageReference using Glide
+        // (See MyAppGlideModule for Loader registration)
+        System.out.println("pictures/"+postsList.get(i).getuID());
+        Glide.with(mContext)
+                .load(storageReference)
+                .into(viewHolder.postImg);
     }
 
     @Override

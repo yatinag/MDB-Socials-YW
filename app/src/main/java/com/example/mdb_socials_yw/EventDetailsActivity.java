@@ -94,6 +94,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         postImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println(details);
                 details.setAttendance(details.getAttendance() + 1);
             }
         });
