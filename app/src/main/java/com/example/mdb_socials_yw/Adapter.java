@@ -15,14 +15,19 @@ import com.example.mdb_socials_yw.Objects.EventPost;
 
 import java.util.ArrayList;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
     private ArrayList<EventPost> postsList;
+    RequestOptions option;
 
     Adapter(Context context, ArrayList<EventPost> pokeNames){
         this.layoutInflater = LayoutInflater.from(context);
         this.postsList = pokeNames;
+        option = new RequestOptions().centerCrop().placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_background);
     }
 
     @NonNull
@@ -45,6 +50,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         viewHolder.postDesc.setText(desc);
         viewHolder.postEmail.setText(email);
         viewHolder.likeCount.setText(likeCount + " Likes");
+
+        Glide.with(mContext).load(String.format("https://assets.pokemon.com/assets/cms2/img/pokedex/detail/%s.png", mData.get(position).getId())).apply(option).into(holder.imgThumbnail);
     }
 
     @Override
@@ -71,6 +78,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             postDesc = itemView.findViewById(R.id.eventDesc);
             likeCount = itemView.findViewById(R.id.likeText);
             postEmail = itemView.findViewById(R.id.eventPersonEmail);
+            postImg = itemView.findViewById(R.id.eventImg);
         }
     }
 }
