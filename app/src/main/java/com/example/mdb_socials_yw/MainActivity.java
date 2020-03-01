@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //
 //        for (int i = 0; i < 3; i++) {
 //            EventPost temp = new EventPost("Sample Event - " + i,
 //                    "Event will be very fun", "boom@boom.com", "src.png", i, "2");
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     EventPost temp = new EventPost();
+                    String id = (String) ds.getKey();
                     String title = (String) ds.child("title").getValue();
                     String desc = (String) ds.child("description").getValue();
                     String email = (String) ds.child("email").getValue();
@@ -81,9 +83,8 @@ public class MainActivity extends AppCompatActivity {
                     temp.setDescription(desc);
                     temp.setAttendance((int) attendance);
                     temp.setImg("src.png");
+                    temp.setuID(id);
                     listPosts.add(temp);
-
-                    System.out.println(listPosts);
                 }
                 recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 1));
                 adapter = new Adapter(MainActivity.this, listPosts);

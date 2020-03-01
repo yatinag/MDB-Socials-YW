@@ -64,6 +64,10 @@ public class EventPost {
         this.img = img;
     }
 
+    public void setuID(String uID) {
+        this.uID = uID;
+    }
+
     public int getAttendance() {
         return attendance;
     }

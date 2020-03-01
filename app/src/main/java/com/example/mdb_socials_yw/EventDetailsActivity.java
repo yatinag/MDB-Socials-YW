@@ -18,7 +18,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
 
-        String post_title = getIntent().getStringExtra("post_title");
+        String uiD = getIntent().getStringExtra("post_uid");
         signoutBtn = findViewById(R.id.signoutBtn);
         btnNewEvent = findViewById(R.id.btnNewEvent);
 
