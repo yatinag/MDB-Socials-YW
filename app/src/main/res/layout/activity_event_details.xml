@@ -36,11 +36,12 @@
         app:layout_constraintVertical_bias="0.82" />
 
     <ImageButton
-        android:id="@+id/likeBtn2"
+        android:id="@+id/likeBtn"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
+        android:clickable="true"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -136,7 +137,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@+id/likeBtn2"
+        app:layout_constraintStart_toEndOf="@+id/likeBtn"
         app:layout_constraintTop_toBottomOf="@+id/eventImg"
         app:layout_constraintVertical_bias="0.23" />
 
