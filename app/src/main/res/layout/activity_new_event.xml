@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.043" />
 
     <CalendarView
-        android:id="@+id/calendarView"
+        android:id="@+id/calendarDate"
         android:layout_width="wrap_content"
         android:layout_height="300dp"
         android:calendarViewShown="false"
@@ -82,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+        app:layout_constraintTop_toBottomOf="@+id/calendarDate" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

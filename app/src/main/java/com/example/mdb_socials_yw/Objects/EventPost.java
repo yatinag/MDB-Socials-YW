@@ -6,6 +6,7 @@ public class EventPost {
     private String email;
     private String img;
     private int attendance = 0;
+    private long date;
     private String uID;
 
     public EventPost() {
@@ -16,6 +17,7 @@ public class EventPost {
         return "EventPost{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", date='" + date + '\'' +
                 ", email='" + email + '\'' +
                 ", img='" + img + '\'' +
                 ", attendance=" + attendance +
@@ -23,12 +25,13 @@ public class EventPost {
                 '}';
     }
 
-    public EventPost(String title, String description, String email, String img, int attendance, String uID) {
+    public EventPost(String title, String description, long date, String email, String img, int attendance, String uID) {
         this.title = title;
         this.description = description;
         this.email = email;
         this.img = img;
         this.attendance = attendance;
+        this.date = date;
         this.uID = uID;
     }
 
@@ -70,6 +73,14 @@ public class EventPost {
 
     public void setuID(String uID) {
         this.uID = uID;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
     }
 
     public int getAttendance() {

@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -51,8 +52,10 @@ public class NewEventActivity extends AppCompatActivity {
     EditText userTitle;
     String picturePath;
     ImageView imgImage;
+    CalendarView date;
 
     String title = "no title";
+    long dateVal;
     String description = "no description";
     String  email = "no@email.com";
     String img;
@@ -69,6 +72,7 @@ public class NewEventActivity extends AppCompatActivity {
         userCaption = findViewById(R.id.userCaption);
         userTitle = findViewById(R.id.userTitle);
         imgImage = findViewById(R.id.imgImage);
+        date = findViewById(R.id.calendarDate);
         mStorage = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -92,8 +96,14 @@ public class NewEventActivity extends AppCompatActivity {
                     toast.show();
                     return;
                 }
+                if((date.getDate() == 0)) {
+                    Toast toast = Toast.makeText( NewEventActivity.this, "Please select a date", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
                 title = (userTitle.getText().toString());
                 description = (userCaption.getText().toString());
+                dateVal = date.getDate();
                 FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     // Name, email address, and profile photo Url
@@ -101,7 +111,7 @@ public class NewEventActivity extends AppCompatActivity {
                     uID = user.getUid();
                 }
                 Uri file = Uri.fromFile(new File(picturePath));
-                String picID = writeNewEventPost(title, description, img, uID, email);
+                String picID = writeNewEventPost(title, description, dateVal, img, uID, email);
                 StorageReference picsRef = mStorage.child(String.format("pictures/%s.jpg",picID));
                 picsRef.putFile(file)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -127,10 +137,10 @@ public class NewEventActivity extends AppCompatActivity {
         });
     }
 
-    private String writeNewEventPost(String title, String description, String img, String userId, String email) {
+    private String writeNewEventPost(String title, String description, long dateVal, String img, String userId, String email) {
         System.out.println("sending data to database");
         String id = mDatabase.push().getKey();
-        EventPost post = new EventPost(title, description, email, img, 0, id);
+        EventPost post = new EventPost(title, description, dateVal, email, img, 0, id);
         System.out.println(post);
 
         mDatabase.child("posts").child(id).setValue(post);
