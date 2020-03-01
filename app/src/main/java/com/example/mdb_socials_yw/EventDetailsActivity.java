@@ -24,7 +24,7 @@ import java.util.Objects;
 public class EventDetailsActivity extends AppCompatActivity {
     Button signoutBtn;
     Button btnNewEvent;
-    DatabaseReference databaseReference;
+    DatabaseReference mDatabase;
     EventPost details;
     TextView postTitle, postDesc, postEmail, likeCount;
     ImageView postImg;
@@ -41,8 +41,9 @@ public class EventDetailsActivity extends AppCompatActivity {
         likeCount = findViewById(R.id.likeText);
         postEmail = findViewById(R.id.eventPersonEmail);
         postImg = findViewById(R.id.eventImg);
+        mDatabase = FirebaseDatabase.getInstance().getReference("posts");
 
-        String uiD = getIntent().getStringExtra("post_uid");
+        final String uiD = getIntent().getStringExtra("post_uid");
         String title = getIntent().getStringExtra("post_title");
         String desc =  getIntent().getStringExtra("post_desc");
         String img = getIntent().getStringExtra("post_img");
@@ -94,8 +95,8 @@ public class EventDetailsActivity extends AppCompatActivity {
         postImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(details);
-                details.setAttendance(details.getAttendance() + 1);
+                System.out.println(uiD);
+                incrementAttendance(uiD);
             }
         });
 
@@ -110,6 +111,28 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     public void newevent(View v) {
         startActivity(new Intent(getApplicationContext(), NewEventActivity.class));
+    }
+
+    private String incrementAttendance(String id) {
+        System.out.println("sending increment to database");
+        DatabaseReference ref = mDatabase;
+
+        // Attach a listener to read the data at our posts reference
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Post post = dataSnapshot.getValue(Post.class);
+                System.out.println(post);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+        String attendance = mDatabase.child("posts").child(id).child("attendance").getValue();
+        return id;
     }
 
 }
