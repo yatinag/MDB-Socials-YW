@@ -69,6 +69,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), EventDetailsActivity.class);
                     intent.putExtra("post_title", postsList.get(getAdapterPosition()).getTitle());
+                    intent.putExtra("post_desc", postsList.get(getAdapterPosition()).getDescription());
+                    intent.putExtra("post_email", postsList.get(getAdapterPosition()).getEmail());
+                    intent.putExtra("post_img", postsList.get(getAdapterPosition()).getImg());
+                    intent.putExtra("post_att", postsList.get(getAdapterPosition()).getAttendance());
+                    intent.putExtra("post_uid", postsList.get(getAdapterPosition()).getuID());
                     v.getContext().startActivity(intent);
                 }
             });
