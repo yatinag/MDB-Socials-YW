@@ -49,9 +49,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         viewHolder.postTitle.setText(title);
         viewHolder.postDesc.setText(desc);
         viewHolder.postEmail.setText(email);
-        viewHolder.likeCount.setText(likeCount + " Likes");
-
-        Glide.with(mContext).load(String.format("https://assets.pokemon.com/assets/cms2/img/pokedex/detail/%s.png", mData.get(position).getId())).apply(option).into(holder.imgThumbnail);
+        viewHolder.likeCount.setText(likeCount + " Interested");
     }
 
     @Override
