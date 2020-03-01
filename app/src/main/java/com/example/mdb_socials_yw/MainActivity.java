@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 //            listPosts.add(temp);
 //        }
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     EventPost temp = new EventPost();
-                    String id = (String) ds.getKey();
+                    String id = ds.getKey();
                     String title = (String) ds.child("title").getValue();
                     String desc = (String) ds.child("description").getValue();
                     String email = (String) ds.child("email").getValue();
@@ -96,10 +96,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop () {
+    protected void onStop() {
         super.onStop();
         System.out.println("BOOM");
         listPosts.clear();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    EventPost temp = new EventPost();
+                    String id = ds.getKey();
+                    String title = (String) ds.child("title").getValue();
+                    String desc = (String) ds.child("description").getValue();
+                    String email = (String) ds.child("email").getValue();
+                    long attendance = (Long) ds.child("attendance").getValue();
+                    String date = (String) ds.child("date").getValue();
+                    temp.setTitle(title);
+                    temp.setEmail(email);
+                    temp.setDescription(desc);
+                    temp.setAttendance((int) attendance);
+                    temp.setImg("src.png");
+                    temp.setuID(id);
+                    temp.setDate(date);
+                    listPosts.add(temp);
+                }
+                recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 1));
+                adapter = new Adapter(MainActivity.this, listPosts);
+                recyclerView.setAdapter(adapter);
+            }
+        });
     }
 
     public void logout(View v) {
