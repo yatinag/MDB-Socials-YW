@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     String desc = (String) ds.child("description").getValue();
                     String email = (String) ds.child("email").getValue();
                     long attendance = (Long) ds.child("attendance").getValue();
-                    long date = (Long) ds.child("date").getValue();
+                    String date = (String) ds.child("date").getValue();
                     temp.setTitle(title);
                     temp.setEmail(email);
                     temp.setDescription(desc);
@@ -93,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setAdapter(adapter);
             }
         });
+    }
+
+    @Override
+    protected void onStop () {
+        super.onStop();
+        System.out.println("BOOM");
+        listPosts.clear();
     }
 
     public void logout(View v) {

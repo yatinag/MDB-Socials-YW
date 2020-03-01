@@ -38,7 +38,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class NewEventActivity extends AppCompatActivity {
 
@@ -55,7 +57,7 @@ public class NewEventActivity extends AppCompatActivity {
     CalendarView date;
 
     String title = "no title";
-    long dateVal;
+    String dateVal;
     String description = "no description";
     String  email = "no@email.com";
     String img;
@@ -87,6 +89,13 @@ public class NewEventActivity extends AppCompatActivity {
             }
         });
 
+        date.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                dateVal = month + "/" + dayOfMonth + "/" + year;
+            }
+        });
+
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,14 +105,13 @@ public class NewEventActivity extends AppCompatActivity {
                     toast.show();
                     return;
                 }
-                if((date.getDate() == 0)) {
+                if(dateVal == null) {
                     Toast toast = Toast.makeText( NewEventActivity.this, "Please select a date", Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }
                 title = (userTitle.getText().toString());
                 description = (userCaption.getText().toString());
-                dateVal = date.getDate();
                 FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     // Name, email address, and profile photo Url
@@ -137,7 +145,7 @@ public class NewEventActivity extends AppCompatActivity {
         });
     }
 
-    private String writeNewEventPost(String title, String description, long dateVal, String img, String userId, String email) {
+    private String writeNewEventPost(String title, String description, String dateVal, String img, String userId, String email) {
         System.out.println("sending data to database");
         String id = mDatabase.push().getKey();
         EventPost post = new EventPost(title, description, dateVal, email, img, 0, id);

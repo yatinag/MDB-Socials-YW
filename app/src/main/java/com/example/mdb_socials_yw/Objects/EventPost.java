@@ -9,7 +9,7 @@ public class EventPost {
     private String email;
     private String img;
     private int attendance = 0;
-    private long date;
+    private String date;
     private String uID;
 
     public EventPost() {
@@ -28,7 +28,7 @@ public class EventPost {
                 '}';
     }
 
-    public EventPost(String title, String description, long date, String email, String img, int attendance, String uID) {
+    public EventPost(String title, String description, String date, String email, String img, int attendance, String uID) {
         this.title = title;
         this.description = description;
         this.email = email;
@@ -78,18 +78,18 @@ public class EventPost {
         this.uID = uID;
     }
 
-    public long getDate() {
+    public String getDate() {
         return date;
     }
 
-    public String getDateString() {
-        Date stringDate = new Date(date);
-        SimpleDateFormat df2 = new SimpleDateFormat("dd MMM yyyy");
-        String dateText = df2.format(date);
-        return dateText;
-    }
+//    public String getDateString() {
+//        Date stringDate = new Date(date);
+//        SimpleDateFormat df2 = new SimpleDateFormat("dd MMM yyyy");
+//        String dateText = df2.format(date);
+//        return dateText;
+//    }
 
-    public void setDate(long date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

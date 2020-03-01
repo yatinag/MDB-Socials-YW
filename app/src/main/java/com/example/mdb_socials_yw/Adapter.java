@@ -50,7 +50,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         String img = postsList.get(i).getImg();
         String desc = postsList.get(i).getDescription();
         String email = postsList.get(i).getEmail();
-        String date = postsList.get(i).getDateString();
+        String date = postsList.get(i).getDate();
         int likeCount = postsList.get(i).getAttendance();
 
         viewHolder.postTitle.setText(title);
@@ -95,8 +95,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                     intent.putExtra("post_img", postsList.get(getAdapterPosition()).getImg());
                     intent.putExtra("post_att", postsList.get(getAdapterPosition()).getAttendance());
                     intent.putExtra("post_uid", postsList.get(getAdapterPosition()).getuID());
-                    intent.putExtra("post_date", postsList.get(getAdapterPosition()).getDateString());
-                    intent.putExtra("post_date_long", postsList.get(getAdapterPosition()).getDate());
+                    intent.putExtra("post_date", postsList.get(getAdapterPosition()).getDate());
                     v.getContext().startActivity(intent);
                 }
             });

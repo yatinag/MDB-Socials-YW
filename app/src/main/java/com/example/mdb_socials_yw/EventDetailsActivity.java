@@ -58,9 +58,8 @@ public class EventDetailsActivity extends AppCompatActivity {
         String email = getIntent().getStringExtra("post_email");
         int attendance = getIntent().getIntExtra("post_att", 0);
         String date = getIntent().getStringExtra("post_date");
-        long dateLong = getIntent().getLongExtra("post_date_long", 0);
 
-        details = new EventPost(title, desc, dateLong, email, img, attendance, uiD);
+        details = new EventPost(title, desc, date, email, img, attendance, uiD);
 
         postTitle.setText(title);
         postDesc.setText(desc);
