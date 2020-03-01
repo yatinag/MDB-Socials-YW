@@ -26,40 +26,41 @@
                 android:id="@+id/eventPersonEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginTop="10dp"
                 android:text="Sample Email"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/eventImg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.15"
+                app:layout_constraintEnd_toStartOf="@+id/eventImg"
+                app:layout_constraintHorizontal_bias="0.62"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.13999999" />
 
-            <ImageButton
-                android:id="@+id/likeBtn"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/like_img"
-                app:layout_constraintBottom_toTopOf="@+id/eventImg"
-                app:layout_constraintEnd_toStartOf="@+id/likeText"
-                app:layout_constraintHorizontal_bias="0.96"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.13" />
+<!--            <ImageButton-->
+<!--                android:id="@+id/likeBtn"-->
+<!--                android:layout_width="20dp"-->
+<!--                android:layout_height="20dp"-->
+<!--                android:src="@drawable/like_img"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/eventImg"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/likeText"-->
+<!--                app:layout_constraintHorizontal_bias="0.96"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintVertical_bias="0.13" />-->
 
             <TextView
                 android:id="@+id/likeText"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
-                android:text="# Likes"
+                android:layout_marginTop="10dp"
+                android:text="# Interested"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/eventImg"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.83"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.36"
+                app:layout_constraintStart_toEndOf="@+id/eventImg"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.15" />
 
