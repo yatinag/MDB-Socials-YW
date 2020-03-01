@@ -2,9 +2,16 @@ package com.example.mdb_socials_yw;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class EventDetailsActivity extends AppCompatActivity {
+    Button signoutBtn;
+    Button btnNewEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -12,8 +19,32 @@ public class EventDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_details);
 
         String post_title = getIntent().getStringExtra("post_title");
+        signoutBtn = findViewById(R.id.signoutBtn);
+        btnNewEvent = findViewById(R.id.btnNewEvent);
 
-
+        signoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout(v);
+            }
+        });
+        btnNewEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newevent(v);
+            }
+        });
 
     }
+
+    public void logout(View v) {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
+    }
+
+    public void newevent(View v) {
+        startActivity(new Intent(getApplicationContext(), NewEventActivity.class));
+    }
+
 }

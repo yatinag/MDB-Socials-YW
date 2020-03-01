@@ -44,7 +44,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         viewHolder.postTitle.setText(title);
         viewHolder.postDesc.setText(desc);
         viewHolder.postEmail.setText(email);
-        viewHolder.likeCount.setText(likeCount + " Likes");
+        viewHolder.likeCount.setText(likeCount + " Interested");
     }
 
     @Override
