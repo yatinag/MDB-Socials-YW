@@ -78,12 +78,14 @@ public class MainActivity extends AppCompatActivity {
                     String desc = (String) ds.child("description").getValue();
                     String email = (String) ds.child("email").getValue();
                     long attendance = (Long) ds.child("attendance").getValue();
+                    String date = (String) ds.child("date").getValue();
                     temp.setTitle(title);
                     temp.setEmail(email);
                     temp.setDescription(desc);
                     temp.setAttendance((int) attendance);
                     temp.setImg("src.png");
                     temp.setuID(id);
+                    temp.setDate(date);
                     listPosts.add(temp);
                 }
                 recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 1));
@@ -91,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setAdapter(adapter);
             }
         });
+    }
+
+    @Override
+    protected void onStop () {
+        super.onStop();
+        System.out.println("BOOM");
+        listPosts.clear();
     }
 
     public void logout(View v) {

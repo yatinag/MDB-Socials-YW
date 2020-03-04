@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -37,7 +38,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class NewEventActivity extends AppCompatActivity {
 
@@ -51,8 +54,10 @@ public class NewEventActivity extends AppCompatActivity {
     EditText userTitle;
     String picturePath;
     ImageView imgImage;
+    CalendarView date;
 
     String title = "no title";
+    String dateVal;
     String description = "no description";
     String  email = "no@email.com";
     String img;
@@ -69,6 +74,7 @@ public class NewEventActivity extends AppCompatActivity {
         userCaption = findViewById(R.id.userCaption);
         userTitle = findViewById(R.id.userTitle);
         imgImage = findViewById(R.id.imgImage);
+        date = findViewById(R.id.calendarDate);
         mStorage = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -83,12 +89,24 @@ public class NewEventActivity extends AppCompatActivity {
             }
         });
 
+        date.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                dateVal = month + "/" + dayOfMonth + "/" + year;
+            }
+        });
+
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent getBack  = new Intent(NewEventActivity.this, MainActivity.class);
                 if(TextUtils.isEmpty(picturePath)) {
                     Toast toast = Toast.makeText( NewEventActivity.this, "Please select an image", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+                if(dateVal == null) {
+                    Toast toast = Toast.makeText( NewEventActivity.this, "Please select a date", Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }
@@ -101,7 +119,7 @@ public class NewEventActivity extends AppCompatActivity {
                     uID = user.getUid();
                 }
                 Uri file = Uri.fromFile(new File(picturePath));
-                String picID = writeNewEventPost(title, description, img, uID, email);
+                String picID = writeNewEventPost(title, description, dateVal, img, uID, email);
                 StorageReference picsRef = mStorage.child(String.format("pictures/%s.jpg",picID));
                 picsRef.putFile(file)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -127,10 +145,10 @@ public class NewEventActivity extends AppCompatActivity {
         });
     }
 
-    private String writeNewEventPost(String title, String description, String img, String userId, String email) {
+    private String writeNewEventPost(String title, String description, String dateVal, String img, String userId, String email) {
         System.out.println("sending data to database");
         String id = mDatabase.push().getKey();
-        EventPost post = new EventPost(title, description, email, img, 0, id);
+        EventPost post = new EventPost(title, description, dateVal, email, img, 0, id);
         System.out.println(post);
 
         mDatabase.child("posts").child(id).setValue(post);
